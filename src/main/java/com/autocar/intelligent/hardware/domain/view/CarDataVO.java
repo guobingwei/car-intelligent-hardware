@@ -17,7 +17,8 @@ public class CarDataVO {
         this.dataList = dataList;
     }
 
-    class Data {
+
+    public  static class Data {
         private Integer id;
         private Double temperature;
         private Double backDistance;

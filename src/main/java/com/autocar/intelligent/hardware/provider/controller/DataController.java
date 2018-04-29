@@ -1,5 +1,6 @@
 package com.autocar.intelligent.hardware.provider.controller;
 
+import com.autocar.intelligent.hardware.common.convert.UploadDataConvert;
 import com.autocar.intelligent.hardware.domain.model.CarIntelligentHardwareUploadModel;
 import com.autocar.intelligent.hardware.domain.view.CarDataVO;
 import com.autocar.intelligent.hardware.provider.response.ApiResponse;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/authcar")
-public class DataController {
+public class DataController extends BaseController {
 
     @Resource
     private HardwareUploadService hardwareUploadService;
@@ -38,10 +39,10 @@ public class DataController {
     public ApiResponse<CarDataVO> getList() {
         try {
             List<CarIntelligentHardwareUploadModel> dataList = hardwareUploadService.getList();
+            return ApiResponse.buildSuccess(UploadDataConvert.modelToVo(dataList));
         } catch (Exception e) {
-            e.printStackTrace();
+            return getExceptionResponse("查询上报数据错误", e);
         }
-        return ApiResponse.buildSuccess(dataList);
     }
 
     /***
@@ -50,6 +51,6 @@ public class DataController {
      */
     @GetMapping(value = "/data/upload")
     public ApiResponse<Boolean> uploadData() {
-
+        return ApiResponse.buildSuccess();
     }
 }
