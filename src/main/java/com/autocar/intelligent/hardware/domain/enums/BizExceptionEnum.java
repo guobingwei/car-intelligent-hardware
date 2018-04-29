@@ -10,8 +10,12 @@ public enum BizExceptionEnum {
     PARAM_ERROR(101,"参数不正确"),
     UNKNOWN_ERROR(102, "未知异常"),
     REQUEST_PARAM_NOT_BLANK(103, "请求参数不能为空"),
-    INT_PARAM_MUST_BIGGER_THAN_ZERO(104, "请求整型参数必须大于0"),;
+    INT_PARAM_MUST_BIGGER_THAN_ZERO(104, "请求整型参数必须大于0"),
 
+
+    FAIL(400, "执行失败"),
+
+    SERVER_EXCEPTION(500,"系统异常请稍后再试");
 
     private Integer code;
     private String error;
