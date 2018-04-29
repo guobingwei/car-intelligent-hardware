@@ -1,4 +1,4 @@
-package com.car.intelligent.hardware.domain.model;
+package com.autocar.intelligent.hardware.domain.model;
 
 
 import com.alibaba.fastjson.JSON;
