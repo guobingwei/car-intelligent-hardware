@@ -16,7 +16,7 @@ import java.util.List;
  * Created by guobingwei on 18/4/29.
  */
 @RestController
-@RequestMapping(value = "/authcar")
+@RequestMapping(value = "/autocar")
 public class DataController extends BaseController {
 
     @Resource

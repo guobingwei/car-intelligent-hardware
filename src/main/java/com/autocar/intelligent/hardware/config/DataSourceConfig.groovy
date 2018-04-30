@@ -11,20 +11,21 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class DataSourceConfig {
 
-    @Value("${jdbcUrl}")
+    @Value('${jdbcUrl}')
     private String jdbcUrl
 
-    @Value("${userName}")
+    @Value('${userName}')
     private String userName
 
-    @Value("${password}")
-    private String password;
+    @Value('${password}')
+    private String password
 
-    @Value("${driverType}")
+    @Value('${driverType}')
     private String driverType
 
-    @Bean("dateSource")
+    @Bean('dateSource')
     public Sql getDataSource() {
-        Sql.newInstance(jdbcUrl, userName, password, driverType)
+        return Sql.newInstance(jdbcUrl, userName, password, driverType)
+//        return Sql.newInstance('jdbc:mysql://10.4.232.238:3306/marketing', 'zcm', '124', 'com.mysql.cj.jdbc.Driver')
     }
 }
