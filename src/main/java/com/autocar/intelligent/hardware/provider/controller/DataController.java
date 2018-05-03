@@ -39,7 +39,7 @@ public class DataController extends BaseController {
     public ApiResponse<CarDataVO> getList() {
         try {
             List<CarIntelligentHardwareUploadModel> dataList = hardwareUploadService.getList();
-            return ApiResponse.buildSuccess(UploadDataConvert.modelToVo(dataList));
+            return ApiResponse.buildSuccess(dataList);
         } catch (Exception e) {
             return getExceptionResponse("查询上报数据错误", e);
         }
