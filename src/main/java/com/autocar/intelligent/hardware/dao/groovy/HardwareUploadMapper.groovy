@@ -1,5 +1,6 @@
 package com.autocar.intelligent.hardware.dao.groovy
 
+import com.autocar.intelligent.hardware.config.DataSourceConfig
 import groovy.sql.Sql
 import org.springframework.stereotype.Service
 
@@ -12,7 +13,7 @@ import javax.annotation.Resource
 class HardwareUploadMapper {
 
     @Resource
-    private Sql dateSource
+    private def dateSource
 
     public List getList() {
         dateSource.rows("select * from car_intelligent_hardware_upload order by id desc limit 20000")

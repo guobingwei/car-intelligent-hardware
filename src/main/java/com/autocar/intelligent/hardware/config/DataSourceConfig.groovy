@@ -20,12 +20,16 @@ class DataSourceConfig {
     @Value('${password}')
     private String password
 
-    @Value('${driverType}')
-    private String driverType
+    @Value('${jdbcDriver}')
+    private String jdbcDriver
 
     @Bean('dateSource')
     public Sql getDataSource() {
-        return Sql.newInstance(jdbcUrl, userName, password, driverType)
+        System.out.println(jdbcUrl);
+        System.out.println(userName);
+        System.out.println(password);
+        System.out.println(jdbcDriver);
+        return Sql.newInstance(jdbcUrl, userName, password, jdbcDriver)
 //        return Sql.newInstance('jdbc:mysql://10.4.232.238:3306/marketing', 'zcm', '124', 'com.mysql.cj.jdbc.Driver')
     }
 }
