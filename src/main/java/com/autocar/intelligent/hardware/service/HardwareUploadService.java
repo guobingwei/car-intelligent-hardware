@@ -1,6 +1,6 @@
 package com.autocar.intelligent.hardware.service;
 
-import com.autocar.intelligent.hardware.domain.model.CarIntelligentHardwareUploadModel;
+import com.autocar.intelligent.hardware.domain.model.CarDataUploadModel;
 
 import java.util.List;
 
@@ -11,14 +11,14 @@ public interface HardwareUploadService {
 
     /***
      * 获取数据上报列表，按时间倒序排列
-     * @return List<CarIntelligentHardwareUploadModel> 数据列表
+     * @return List<CarDataUploadModel> 数据列表
      */
-    List<CarIntelligentHardwareUploadModel> getList();
+    List<CarDataUploadModel> getList();
 
     /***
      * 插入数据
      * @param hardwareUploadModel
      * @return success 是否成功
      */
-    boolean insert(CarIntelligentHardwareUploadModel hardwareUploadModel);
+    boolean insert(CarDataUploadModel hardwareUploadModel);
 }

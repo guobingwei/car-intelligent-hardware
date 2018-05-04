@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by guobingwei on 18/4/29.
  */
 
-public class CarIntelligentHardwareUploadModel {
+public class CarDataUploadModel {
     private Integer id;
     private Double temperature;
     private Double backDistance;
@@ -58,7 +58,7 @@ public class CarIntelligentHardwareUploadModel {
 
     @Override
     public String toString() {
-        return "CarIntelligentHardwareUploadModel{" +
+        return "CarDataUploadModel{" +
                 "id=" + id +
                 ", temperature=" + temperature +
                 ", backDistance=" + backDistance +
@@ -68,7 +68,7 @@ public class CarIntelligentHardwareUploadModel {
     }
 
     public static void main(String[] args) {
-        CarIntelligentHardwareUploadModel carIntelligentHardwareUploadModel = new CarIntelligentHardwareUploadModel();
+        CarDataUploadModel carIntelligentHardwareUploadModel = new CarDataUploadModel();
         carIntelligentHardwareUploadModel.setBackDistance(433.32);
         carIntelligentHardwareUploadModel.setTemperature(29.33);
         System.out.println(JSON.toJSONString(carIntelligentHardwareUploadModel));

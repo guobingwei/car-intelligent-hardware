@@ -1,6 +1,6 @@
 package com.autocar.intelligent.hardware.dao.groovy
 
-import com.autocar.intelligent.hardware.domain.model.CarIntelligentHardwareUploadModel
+import com.autocar.intelligent.hardware.domain.model.CarDataUploadModel
 import org.springframework.stereotype.Service
 
 import javax.annotation.Resource
@@ -14,11 +14,13 @@ class HardwareUploadMapper {
     @Resource
     private def dateSource
 
-    public List<CarIntelligentHardwareUploadModel> getList() {
+    public List<CarDataUploadModel> getList() {
         return dateSource.rows("select * from car_intelligent_hardware_upload order by id desc limit 20000")
     }
 
-    public boolean insert(Map obj) {
-        return dateSource.executeInsert("INSERT INTO car_intelligent_hardware_upload(`temperature`, `back_distance`, `ctime`) VALUES (?, ?, ?)", "a", "b", new Date())
+    public boolean insert(CarDataUploadModel carDataUploadModel) {
+        return dateSource.executeInsert("INSERT INTO car_intelligent_hardware_upload(`temperature`, `back_distance`, `ctime`) " +
+                "VALUES (?, ?, ?)",
+                carDataUploadModel.temperature, carDataUploadModel.backDistance, new Date())
     }
 }

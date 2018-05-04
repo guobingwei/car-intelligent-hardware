@@ -1,6 +1,6 @@
 package com.autocar.intelligent.hardware.common.convert;
 
-import com.autocar.intelligent.hardware.domain.model.CarIntelligentHardwareUploadModel;
+import com.autocar.intelligent.hardware.domain.model.CarDataUploadModel;
 import com.autocar.intelligent.hardware.domain.view.CarDataVO;
 import org.springframework.util.CollectionUtils;
 
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class UploadDataConvert {
 
-    public static List<CarDataVO.Data> modelToVo(List<CarIntelligentHardwareUploadModel> hardwareUploadModels) {
+    public static List<CarDataVO.Data> modelToVo(List<CarDataUploadModel> hardwareUploadModels) {
         if (CollectionUtils.isEmpty(hardwareUploadModels)) {
             return new ArrayList<>();
         }

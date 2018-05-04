@@ -1,7 +1,7 @@
 package com.autocar.intelligent.hardware.service.impl;
 
 import com.autocar.intelligent.hardware.dao.groovy.HardwareUploadMapper;
-import com.autocar.intelligent.hardware.domain.model.CarIntelligentHardwareUploadModel;
+import com.autocar.intelligent.hardware.domain.model.CarDataUploadModel;
 import com.autocar.intelligent.hardware.service.HardwareUploadService;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +18,12 @@ public class HardwareUploadServiceImpl implements HardwareUploadService {
     private HardwareUploadMapper hardwareUploadMapper;
 
     @Override
-    public List<CarIntelligentHardwareUploadModel> getList() {
+    public List<CarDataUploadModel> getList() {
         return hardwareUploadMapper.getList();
     }
 
     @Override
-    public boolean insert(CarIntelligentHardwareUploadModel hardwareUploadModel) {
-        return false;
+    public boolean insert(CarDataUploadModel carDataUploadModel) {
+        return hardwareUploadMapper.insert(carDataUploadModel);
     }
 }

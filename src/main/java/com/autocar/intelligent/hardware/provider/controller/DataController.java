@@ -1,7 +1,6 @@
 package com.autocar.intelligent.hardware.provider.controller;
 
-import com.autocar.intelligent.hardware.common.convert.UploadDataConvert;
-import com.autocar.intelligent.hardware.domain.model.CarIntelligentHardwareUploadModel;
+import com.autocar.intelligent.hardware.domain.model.CarDataUploadModel;
 import com.autocar.intelligent.hardware.domain.view.CarDataVO;
 import com.autocar.intelligent.hardware.provider.response.ApiResponse;
 import com.autocar.intelligent.hardware.service.HardwareUploadService;
@@ -38,7 +37,7 @@ public class DataController extends BaseController {
     @GetMapping(value = "/upload/list")
     public ApiResponse<CarDataVO> getList() {
         try {
-            List<CarIntelligentHardwareUploadModel> dataList = hardwareUploadService.getList();
+            List<CarDataUploadModel> dataList = hardwareUploadService.getList();
             return ApiResponse.buildSuccess(dataList);
         } catch (Exception e) {
             return getExceptionResponse("查询上报数据错误", e);
