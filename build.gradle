@@ -16,6 +16,7 @@ dependencies {
 
     // spring boot
     compile("org.springframework.boot:spring-boot-starter-web:2.0.1.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-websocket")
 
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'

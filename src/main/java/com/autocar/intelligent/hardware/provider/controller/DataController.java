@@ -3,7 +3,7 @@ package com.autocar.intelligent.hardware.provider.controller;
 import com.autocar.intelligent.hardware.domain.model.CarDataUploadModel;
 import com.autocar.intelligent.hardware.domain.view.CarDataVO;
 import com.autocar.intelligent.hardware.provider.response.ApiResponse;
-import com.autocar.intelligent.hardware.service.HardwareUploadService;
+import com.autocar.intelligent.hardware.service.HardwareUploadDataService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +19,7 @@ import java.util.List;
 public class DataController extends BaseController {
 
     @Resource
-    private HardwareUploadService hardwareUploadService;
+    private HardwareUploadDataService hardwareUploadService;
 
     /***
      * 健康检查接口

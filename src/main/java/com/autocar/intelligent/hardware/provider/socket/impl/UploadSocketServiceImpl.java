@@ -3,7 +3,7 @@ package com.autocar.intelligent.hardware.provider.socket.impl;
 import com.alibaba.fastjson.JSON;
 import com.autocar.intelligent.hardware.domain.model.CarDataUploadModel;
 import com.autocar.intelligent.hardware.provider.socket.UploadSocketService;
-import com.autocar.intelligent.hardware.service.HardwareUploadService;
+import com.autocar.intelligent.hardware.service.HardwareUploadDataService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ public class UploadSocketServiceImpl implements UploadSocketService {
     private static Logger logger = LoggerFactory.getLogger(UploadSocketServiceImpl.class);
 
     @Resource
-    private HardwareUploadService hardwareUploadService;
+    private HardwareUploadDataService hardwareUploadService;
 
     @Override
     public Object handleReceive(String JSONString) {

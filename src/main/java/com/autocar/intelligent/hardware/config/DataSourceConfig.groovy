@@ -25,11 +25,6 @@ class DataSourceConfig {
 
     @Bean('dateSource')
     public Sql getDataSource() {
-        System.out.println(jdbcUrl);
-        System.out.println(userName);
-        System.out.println(password);
-        System.out.println(jdbcDriver);
         return Sql.newInstance(jdbcUrl, userName, password, jdbcDriver)
-//        return Sql.newInstance('jdbc:mysql://10.4.232.238:3306/marketing', 'zcm', '124', 'com.mysql.cj.jdbc.Driver')
     }
 }

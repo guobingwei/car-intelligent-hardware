@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by guobingwei on 18/4/29.
  */
-public interface HardwareUploadService {
+public interface HardwareUploadDataService {
 
     /***
      * 获取数据上报列表，按时间倒序排列
