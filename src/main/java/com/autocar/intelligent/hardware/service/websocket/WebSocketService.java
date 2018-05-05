@@ -80,8 +80,6 @@ public class WebSocketService {
     }
 
 
-
-
     @OnError
     public void onError(Throwable t) throws Throwable {
         log.error("Chat Error: " + t.toString(), t);
@@ -107,5 +105,14 @@ public class WebSocketService {
                 broadcast(message);
             }
         }
+    }
+
+    /***
+     * 发送消息
+     * @param jsonStr
+     * @throws IOException
+     */
+    public static void broadcastMessage(String jsonStr){
+        broadcast(jsonStr);
     }
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.autocar.intelligent.hardware.domain.model.CarDataUploadModel;
 import com.autocar.intelligent.hardware.provider.socket.UploadSocketService;
 import com.autocar.intelligent.hardware.service.HardwareUploadDataService;
+import com.autocar.intelligent.hardware.service.websocket.WebSocketService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,9 @@ public class UploadSocketServiceImpl implements UploadSocketService {
         // 数据上报
         CarDataUploadModel carDataUploadModel = JSON.parseObject(JSONString, CarDataUploadModel.class);
         hardwareUploadService.insert(carDataUploadModel);
+
+        // 消息广播
+        WebSocketService.broadcastMessage(JSON.toJSONString(carDataUploadModel));
         return "success";
     }
 }
