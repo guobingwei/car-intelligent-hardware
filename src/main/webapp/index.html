@@ -18,9 +18,42 @@
             active-text-color="#ffd04b">
         <el-menu-item index="1">实时数据展示</el-menu-item>
         <el-menu-item index="2">历史数据展示</el-menu-item>
-        <el-menu-item index="3" >汽车之家</el-menu-item>
+        <el-menu-item index="3">汽车之家</el-menu-item>
     </el-menu>
+
+
+    <!--历史列表：-->
+    <br>
+    <template id="history_data_list">
+        <el-table
+                :data="tableData3"
+                height="250"
+                border
+                style="width: 100%">
+            <el-table-column
+                    prop="date"
+                    label="日期"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="name"
+                    label="姓名"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="address"
+                    label="地址">
+            </el-table-column>
+        </el-table>
+    </template>
 </div>
+
+<div id="autocar_data" style="margin-left:  40%; margin-top:  20%; display: none;">
+    <h1 style="color: #ef0b0b;">距离：${{}} 米</h1>
+    <h1 style="color: #47d71e;=">温度：${{}}摄氏度</h1>
+</div>
+
+
 </body>
 <!-- import Vue before Element -->
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
@@ -29,11 +62,9 @@
 <script>
     new Vue({
         el: '#app',
-        data: function() {
-            return { visible: false }
+        data: function () {
+            return {visible: false}
         }
     })
 </script>
-
-
 </html>
