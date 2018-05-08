@@ -9,7 +9,7 @@
 <div id="app">
     <!--<div class="line"></div>-->
     <el-menu
-            :default-active="activeIndex2"
+            :default-active="activeIndex"
             class="el-menu-demo"
             mode="horizontal"
             @select="handleSelect"
@@ -26,30 +26,32 @@
     <br>
     <template id="history_data_list">
         <el-table
-                :data="tableData3"
+                :data="tableData"
                 height="250"
                 border
-                style="width: 100%">
+                id="data_table"
+                style="width: 100%; display: none">
+            <el-table-column
+                    prop="temperature"
+                    label="温度"
+                    width="200">
+            </el-table-column>
+            <el-table-column
+                    prop="distance"
+                    label="距离"
+                    width="200">
+            </el-table-column>
             <el-table-column
                     prop="date"
-                    label="日期"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="name"
-                    label="姓名"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="address"
-                    label="地址">
+                    label="上报日期"
+            width="300">
             </el-table-column>
         </el-table>
     </template>
 </div>
 
-<div id="autocar_data" style="margin-left:  40%; margin-top:  20%; display: none;">
-    <h1 style="color: #ef0b0b;">距离：${{}} 米</h1>
+<div id="autocar_data" style="margin-left:  31%; margin-top:  20%; display: flex;">
+    <h1 style="color: #ef0b0b;">距离：${{}} 米</h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <h1 style="color: #47d71e;=">温度：${{}}摄氏度</h1>
 </div>
 
@@ -60,11 +62,33 @@
 <!-- import JavaScript -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
-    new Vue({
+    var vm = new Vue({
         el: '#app',
-        data: function () {
-            return {visible: false}
+        data () {
+            return {
+                activeIndex:1
+            };
+        },
+
+        methods: {
+            handleSelect(index, indexPath) {
+                console.log(index, indexPath)
+                if (index == 1) {
+                    console.log(1)
+                    document.getElementById("data_table").style.display="none";
+                    document.getElementById("autocar_data").style.display="flex";
+                } else if(index == 2) {
+                    document.getElementById("autocar_data").style.display="none";
+                    document.getElementById("data_table").style.display="flex";
+                } else if(index == 3) {
+                    document.getElementById("autocar_data").style.display="none";
+                    document.getElementById("data_table").style.display="none";
+                }
+            },
+
         }
     })
+
+
 </script>
 </html>
