@@ -24,19 +24,20 @@
     <!--历史列表：-->
     <br>
     <template id="history_data_list">
-        <el-table :data="uploadList" height="250" border id="data_table" style="width: 100%; display: none">
+        <el-table :data="uploadList" height="250" border id="data_table" style="width: 100%; display: none;flex-flow: column">
             <el-table-column prop="temperatures" label="温度" width="200"></el-table-column>
             <el-table-column prop="back_distance" label="距离" width="200"></el-table-column>
-            <el-table-column prop="ctime" label="上报日期"></el-table-column>
+            <el-table-column prop="ctime" label="上报日期" width="400"></el-table-column>
         </el-table>
     </template>
-</div>
 
-<div id="autocar_data" style="margin-left:  31%; margin-top:  20%; display: flex;">
-    <h1 style="color: #ef0b0b;"><span id="temp">温度: {{temperature}} 米</span></h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <h1 style="color: #47d71e;="><span id="dis">距离：{{ distance }}摄氏度</span></h1>
-</div>
 
+    <div id="autocar_data" style="margin-left:  31%; margin-top:  20%; display: flex;">
+        <h1 style="color: #ef0b0b;"><span id="temp">温度: {{temperature}} 米</span></h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h1 style="color: #47d71e;="><span id="dis">距离：{{ distance }}摄氏度</span></h1>
+    </div>
+
+</div>
 
 </body>
 <!-- import Vue before Element -->
@@ -54,10 +55,15 @@
 
         el: '#app',
 
-        data: {
-            activeIndex: '1',
-            uploadList: [],
-            currentData : {}
+        data() {
+            return {
+                temperature:"20",
+                distance:'200',
+                activeIndex: '1',
+                uploadList: [],
+                currentData : {}
+            };
+
         },
 
         methods: {
