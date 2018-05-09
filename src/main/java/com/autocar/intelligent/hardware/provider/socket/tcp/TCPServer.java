@@ -10,6 +10,8 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.util.Iterator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 服务端
@@ -29,18 +31,16 @@ public class TCPServer {
     // 本地监听端口
     private static final int LISTEN_PORT = 8900;
 
+    private static ExecutorService executorService = Executors.newFixedThreadPool(100);
 
     static {
-        new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    init();
-                } catch (IOException e) {
-                    logger.error("TCPServer 初始化异常 error={}", e.getMessage(), e);
-                }
+        executorService.submit( () -> {
+            try {
+                init();
+            } catch (IOException e) {
+                logger.error("socket server 初始化失败 error={}", e.getMessage(), e);
             }
-        };
+        });
     }
 
     /***
