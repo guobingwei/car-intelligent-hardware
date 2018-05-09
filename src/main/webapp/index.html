@@ -21,38 +21,20 @@
         <el-menu-item index="3">汽车之家</el-menu-item>
     </el-menu>
 
-
     <!--历史列表：-->
     <br>
     <template id="history_data_list">
-        <el-table
-                :data="tableData"
-                height="250"
-                border
-                id="data_table"
-                style="width: 100%; display: none">
-            <el-table-column
-                    prop="temperature"
-                    label="温度"
-                    width="200">
-            </el-table-column>
-            <el-table-column
-                    prop="distance"
-                    label="距离"
-                    width="200">
-            </el-table-column>
-            <el-table-column
-                    prop="date"
-                    label="上报日期"
-            width="300">
-            </el-table-column>
+        <el-table :data="uploadList" height="250" border id="data_table" style="width: 100%; display: none">
+            <el-table-column prop="temperatures" label="温度" width="200"></el-table-column>
+            <el-table-column prop="back_distance" label="距离" width="200"></el-table-column>
+            <el-table-column prop="ctime" label="上报日期"></el-table-column>
         </el-table>
     </template>
 </div>
 
 <div id="autocar_data" style="margin-left:  31%; margin-top:  20%; display: flex;">
-    <h1 style="color: #ef0b0b;">距离：${{}} 米</h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <h1 style="color: #47d71e;=">温度：${{}}摄氏度</h1>
+    <h1 style="color: #ef0b0b;"><span id="temp">温度: {{temperature}} 米</span></h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <h1 style="color: #47d71e;="><span id="dis">距离：{{ distance }}摄氏度</span></h1>
 </div>
 
 
@@ -61,34 +43,52 @@
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <!-- import JavaScript -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<!-- axios.js vue官方推荐插件 -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <script>
+    var temperature = 'test';
+
     var vm = new Vue({
+
         el: '#app',
-        data () {
-            return {
-                activeIndex:1
-            };
+
+        data: {
+            activeIndex: '1',
+            uploadList: [],
+            currentData : {}
         },
 
         methods: {
             handleSelect(index, indexPath) {
-                console.log(index, indexPath)
                 if (index == 1) {
                     console.log(1)
-                    document.getElementById("data_table").style.display="none";
-                    document.getElementById("autocar_data").style.display="flex";
-                } else if(index == 2) {
-                    document.getElementById("autocar_data").style.display="none";
-                    document.getElementById("data_table").style.display="flex";
-                } else if(index == 3) {
-                    document.getElementById("autocar_data").style.display="none";
-                    document.getElementById("data_table").style.display="none";
+                    document.getElementById("data_table").style.display = "none";
+                    document.getElementById("autocar_data").style.display = "flex";
+                    vm.currentData.distance = 20;
+                    vm.currentData.temperature = 20;
+                    console.log(vm.currentData)
+                } else if (index == 2) {
+                    document.getElementById("autocar_data").style.display = "none";
+                    document.getElementById("data_table").style.display = "flex";
+
+                    // ajax
+                    axios.get('http://localhost:8080/autocar/upload/list')
+                        .then(function (response) {
+                            console.log(response);
+                            vm.uploadList = response.data.data
+                            console.log(vm.uploadList)
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+
+                } else if (index == 3) {
+                    document.getElementById("autocar_data").style.display = "none";
+                    document.getElementById("data_table").style.display = "none";
                 }
             },
-
         }
     })
-
-
 </script>
 </html>
