@@ -1,8 +1,11 @@
 package com.autocar.intelligent.hardware.provider.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.autocar.intelligent.hardware.domain.model.CarDataUploadModel;
+import com.autocar.intelligent.hardware.domain.param.CarDataUploadParam;
 import com.autocar.intelligent.hardware.domain.view.CarDataVO;
 import com.autocar.intelligent.hardware.provider.response.ApiResponse;
+import com.autocar.intelligent.hardware.provider.socket.UploadSocketService;
 import com.autocar.intelligent.hardware.service.HardwareUploadDataService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,9 @@ public class DataController extends BaseController {
 
     @Resource
     private HardwareUploadDataService hardwareUploadService;
+
+    @Resource
+    private UploadSocketService uploadSocketService;
 
     /***
      * 健康检查接口
@@ -49,7 +55,7 @@ public class DataController extends BaseController {
      * @return
      */
     @GetMapping(value = "/data/upload")
-    public ApiResponse<Boolean> uploadData() {
-        return ApiResponse.buildSuccess();
+    public ApiResponse<Boolean> uploadData(CarDataUploadParam carDataUploadParam) {
+        return ApiResponse.buildSuccess(uploadSocketService.handleReceive(JSON.toJSONString(carDataUploadParam)));
     }
 }

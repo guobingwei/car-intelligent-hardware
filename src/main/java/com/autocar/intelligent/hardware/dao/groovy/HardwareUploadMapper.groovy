@@ -19,7 +19,7 @@ class HardwareUploadMapper {
     }
 
     public boolean insert(CarDataUploadModel carDataUploadModel) {
-        return dateSource.executeInsert("INSERT INTO car_intelligent_hardware_upload(`temperature`, `back_distance`, `ctime`) " +
+        return dateSource.executeInsert("INSERT INTO car_intelligent_hardware_upload(`temperatures`, `back_distance`, `ctime`) " +
                 "VALUES (?, ?, ?)",
                 carDataUploadModel.temperature, carDataUploadModel.backDistance, new Date())
     }
