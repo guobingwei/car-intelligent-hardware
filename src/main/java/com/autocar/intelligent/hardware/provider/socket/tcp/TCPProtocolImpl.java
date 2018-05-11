@@ -32,6 +32,7 @@ public class TCPProtocolImpl implements TCPProtocol {
 
     @Override
     public void handleAccept(SelectionKey key) throws IOException {
+        System.out.println("有连接请求");
         SocketChannel clientChannel = ((ServerSocketChannel)key.channel()).accept();
         clientChannel.configureBlocking(false);
         clientChannel.register(key.selector(), SelectionKey.OP_READ, ByteBuffer.allocate(bufferSize));
@@ -48,9 +49,11 @@ public class TCPProtocolImpl implements TCPProtocol {
 
         // 读取信息获得读取的字节数
         long bytesRead = clientChannel.read(buffer);
+        logger.info("handleRead info={}", buffer);
 
         if(bytesRead == -1) {
             // 没有读取到内容的情况
+            logger.warn("没有读取到数据 bytesRead = -1");
             clientChannel.close();
         } else {
             // 将缓冲区准备为数据传出状态

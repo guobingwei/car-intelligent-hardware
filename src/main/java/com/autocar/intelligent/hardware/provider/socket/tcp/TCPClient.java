@@ -1,5 +1,8 @@
 package com.autocar.intelligent.hardware.provider.socket.tcp;
 
+import com.alibaba.fastjson.JSON;
+import com.autocar.intelligent.hardware.domain.param.CarDataUploadParam;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -52,6 +55,7 @@ public class TCPClient {
 
         // 启动读取线程
         new TCPClientReadThread(selector);
+        System.out.println("init success");
     }
 
     /**
@@ -60,12 +64,17 @@ public class TCPClient {
      * @throws IOException
      */
     public void sendMsg(String message) throws IOException {
-        ByteBuffer writeBuffer = ByteBuffer.wrap(message.getBytes("UTF-16"));
+        ByteBuffer writeBuffer = ByteBuffer.wrap(message.getBytes("UTF-8"));
         socketChannel.write(writeBuffer);
+        System.out.println("sendMsg end");
     }
 
     public static void main(String[] args) throws IOException {
-        TCPClient client = new TCPClient("127.0.0.1", 1978);
-        client.sendMsg("你好! weiguobing! 醉里挑灯看剑, 梦回吹角连营");
+        TCPClient client = new TCPClient("127.0.0.1", 8900);
+
+        CarDataUploadParam carDataUploadParam = new CarDataUploadParam();
+        carDataUploadParam.setBackDistance(12.11);
+        carDataUploadParam.setTemperature(23.5);
+        client.sendMsg(JSON.toJSONString(carDataUploadParam));
     }
 }

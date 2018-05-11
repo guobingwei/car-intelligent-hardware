@@ -71,6 +71,11 @@ public class TCPServer {
             // 等待某信道就绪(或超时)
             if (selector.select(TIME_OUT) == 0) {
                 logger.info("等待通信信道就绪......");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    logger.error("error={}", e.getMessage(), e);
+                }
                 continue;
             }
 
