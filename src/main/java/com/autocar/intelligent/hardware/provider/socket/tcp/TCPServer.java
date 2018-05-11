@@ -1,11 +1,16 @@
 package com.autocar.intelligent.hardware.provider.socket.tcp;
 
+import com.autocar.intelligent.hardware.provider.socket.UploadSocketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import java.io.*;
 import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -33,20 +38,25 @@ public class TCPServer {
 
     private static ExecutorService executorService = Executors.newFixedThreadPool(100);
 
-    static {
-        executorService.submit( () -> {
-            try {
-                init();
-            } catch (IOException e) {
-                logger.error("socket server 初始化失败 error={}", e.getMessage(), e);
-            }
-        });
-    }
+
+    @Resource
+    private UploadSocketService uploadSocketService;
+
+//    static {
+//        executorService.submit(() -> {
+//            try {
+//                init();
+//            } catch (IOException e) {
+//                logger.error("socket server 初始化失败 error={}", e.getMessage(), e);
+//            }
+//        });
+//    }
 
     /***
      * TCPServer初始化逻辑
      * @throws IOException
      */
+
     private static void init() throws IOException {
         // 创建选择器
         Selector selector = Selector.open();
@@ -108,6 +118,69 @@ public class TCPServer {
 
                 // 移除处理过的键
                 keyIter.remove();
+            }
+        }
+    }
+
+    PrintWriter pw;
+    OutputStream os;
+    BufferedReader br;
+    InputStream is;
+    Socket socket;
+    ServerSocket serverSocket;
+
+    @PostConstruct
+    public void init2() {
+        executorService.submit( () -> {
+            initSocketServer();
+        });
+    }
+
+    private void initSocketServer() {
+        try {
+            logger.info("init....");
+            //1.建立一个服务器Socket(ServerSocket)绑定指定端口
+            serverSocket = new ServerSocket(8900);
+
+            //2.使用accept()方法阻止等待监听，获得新连接
+            socket = serverSocket.accept();
+            logger.info("等待监听....");
+
+
+            //3.获得输入流
+            is = socket.getInputStream();
+            br = new BufferedReader(new InputStreamReader(is));
+            logger.info("获得输入流 br={}", br);
+
+            //获得输出流
+            os = socket.getOutputStream();
+            pw = new PrintWriter(os);
+
+            //4.读取用户输入信息
+            String info = null;
+            while (!((info = br.readLine()) == null)) {
+                logger.info("我是服务器，接收到的信息为：" + info);
+                uploadSocketService.handleReceive(info);
+            }
+
+            //给客户一个响应
+            String reply = "welcome";
+            pw.write(reply);
+            pw.flush();
+
+        } catch (IOException e) {
+            logger.error("socket 初始化异常", e);
+        } finally {
+            //5.关闭资源
+            try {
+                pw.close();
+                os.close();
+                br.close();
+                is.close();
+                socket.close();
+                serverSocket.close();
+            } catch (IOException e) {
+                logger.error("关闭资源异常", e);
             }
         }
     }
