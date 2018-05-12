@@ -11,6 +11,10 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    main.resources.srcDir("src/main/profiles")
+}
+
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.3.11'
 

@@ -25,8 +25,8 @@ public class SocketClient {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             //3.利用流按照一定的操作，对socket进行读写操作
             CarDataUploadParam carDataUploadParam = new CarDataUploadParam();
-            carDataUploadParam.setBackDistance(12.11);
-            carDataUploadParam.setTemperature(23.5);
+            carDataUploadParam.setBackDistance(111.11);
+            carDataUploadParam.setTemperature(213.5);
 
             pw.write(JSON.toJSONString(carDataUploadParam));
             pw.flush();

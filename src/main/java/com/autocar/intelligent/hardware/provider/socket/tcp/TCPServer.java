@@ -142,31 +142,46 @@ public class TCPServer {
             //1.建立一个服务器Socket(ServerSocket)绑定指定端口
             serverSocket = new ServerSocket(8900);
 
-            //2.使用accept()方法阻止等待监听，获得新连接
-            socket = serverSocket.accept();
-            logger.info("等待监听....");
+            while (true) {
+                //2.使用accept()方法阻止等待监听，获得新连接
+                socket = serverSocket.accept();
+                logger.info("等待监听....");
 
+                //3.获得输入流
+                is = socket.getInputStream();
+                br = new BufferedReader(new InputStreamReader(is));
+                logger.info("获得输入流 br={}", br);
 
-            //3.获得输入流
-            is = socket.getInputStream();
-            br = new BufferedReader(new InputStreamReader(is));
-            logger.info("获得输入流 br={}", br);
+                //获得输出流
+                os = socket.getOutputStream();
+                pw = new PrintWriter(os);
 
-            //获得输出流
-            os = socket.getOutputStream();
-            pw = new PrintWriter(os);
+                //4.读取用户输入信息
+                String info = null;
+                while (!((info = br.readLine()) == null)) {
+                    logger.info("我是服务器，接收到的信息为：" + info);
+                    uploadSocketService.handleReceive(info);
+                }
 
-            //4.读取用户输入信息
-            String info = null;
-            while (!((info = br.readLine()) == null)) {
-                logger.info("我是服务器，接收到的信息为：" + info);
-                uploadSocketService.handleReceive(info);
+                //给客户一个响应
+                String reply = "welcome";
+                pw.write(reply);
+                pw.flush();
+
+                // 关闭资源
+                pw.close();
+                os.close();
+                br.close();
+                is.close();
+                socket.close();
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    logger.error("线程sleep异常", e);
+                }
             }
 
-            //给客户一个响应
-            String reply = "welcome";
-            pw.write(reply);
-            pw.flush();
 
         } catch (IOException e) {
             logger.error("socket 初始化异常", e);
@@ -179,6 +194,7 @@ public class TCPServer {
                 is.close();
                 socket.close();
                 serverSocket.close();
+                logger.warn("资源关闭");
             } catch (IOException e) {
                 logger.error("关闭资源异常", e);
             }

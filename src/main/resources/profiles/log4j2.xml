@@ -1,23 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN" monitorInterval="60">
     <Properties>
-        <Property name="PID">????</Property>
-        <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
-        <Property name="LOG_LEVEL_PATTERN">%5p</Property>
-        <Property name="PATTERN">%XMDT %clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{${LOG_LEVEL_PATTERN}}
-            %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint}
-            %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}
-        </Property>
-        <!--<Property name="LOG_DIR">./logs/</Property>-->
+        <Property name="PATTERN">%XMDT %X{logger_id} %d %p (%F:%L) [%marker] - %m%n</Property>
+        <Property name="LOG_DIR">/opt/logs/autocar/</Property>
     </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="${sys:PATTERN}"/>
+            <PatternLayout pattern="${PATTERN}"/>
         </Console>
+
+        <RollingRandomAccessFile name="ErrorAppender" fileName="${LOG_DIR}/error.log" filePattern="${LOG_DIR}/error.%d{yyyy-MM-dd}.log" append="true">
+            <ThresholdFilter level="error" onMatch="ACCEPT" OnMismatch="DENY"/>
+            <PatternLayout pattern="${PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="InfoAppender" fileName="${LOG_DIR}/info.log" filePattern="${LOG_DIR}/info.%d{yyyy-MM-dd}.log" append="true">
+            <ThresholdFilter level="info" onMatch="ACCEPT" OnMismatch="DENY"/>
+            <PatternLayout pattern="${PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="WarnAppender" fileName="${LOG_DIR}/warn.log" filePattern="${LOG_DIR}/warn.%d{yyyy-MM-dd}.log" append="true">
+            <ThresholdFilter level="warn" onMatch="ACCEPT" OnMismatch="DENY"/>
+            <PatternLayout pattern="${PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingRandomAccessFile>
     </Appenders>
+
+
     <Loggers>
-        <Root level="trace">
+        <Root level="info" includeLocation="true">
             <appenderRef ref="Console"/>
+            <appenderRef ref="InfoAppender"/>
+            <appenderRef ref="ErrorAppender"/>
+            <appenderRef ref="WarnAppender"/>
         </Root>
+
+        <Logger name="ErrorLogger" level="error" additivity="false" includeLocation="true">
+            <AppenderRef ref="ErrorAppender"/>
+        </Logger>
+
+        <Logger name="InfoLogger" level="info" additivity="false" includeLocation="true">
+            <AppenderRef ref="InfoAppender"/>
+        </Logger>
+        <Logger name="WarnLogger" level="warn" additivity="false" includeLocation="true">
+            <AppenderRef ref="WarnAppender"/>
+        </Logger>
     </Loggers>
 </Configuration>
