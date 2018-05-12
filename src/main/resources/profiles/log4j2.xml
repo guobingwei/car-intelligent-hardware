@@ -2,7 +2,7 @@
 <Configuration status="WARN" monitorInterval="60">
     <Properties>
         <Property name="PATTERN">%XMDT %X{logger_id} %d %p (%F:%L) [%marker] - %m%n</Property>
-        <Property name="LOG_DIR">/opt/logs/autocar/</Property>
+        <Property name="LOG_DIR">/opt/logs/autocar</Property>
     </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
