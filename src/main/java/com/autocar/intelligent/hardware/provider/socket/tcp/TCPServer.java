@@ -122,13 +122,6 @@ public class TCPServer {
         }
     }
 
-    PrintWriter pw;
-    OutputStream os;
-    BufferedReader br;
-    InputStream is;
-    Socket socket;
-    ServerSocket serverSocket;
-
     @PostConstruct
     public void init2() {
         executorService.submit( () -> {
@@ -138,23 +131,23 @@ public class TCPServer {
 
     private void initSocketServer() {
         try {
-            logger.info("init....");
+            logger.info("socket init....");
             //1.建立一个服务器Socket(ServerSocket)绑定指定端口
-            serverSocket = new ServerSocket(8900);
+            ServerSocket serverSocket = new ServerSocket(8900);
 
             while (true) {
                 //2.使用accept()方法阻止等待监听，获得新连接
-                socket = serverSocket.accept();
+                Socket socket = serverSocket.accept();
                 logger.info("等待监听....");
 
                 //3.获得输入流
-                is = socket.getInputStream();
-                br = new BufferedReader(new InputStreamReader(is));
+                InputStream is = socket.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 logger.info("获得输入流 br={}", br);
 
                 //获得输出流
-                os = socket.getOutputStream();
-                pw = new PrintWriter(os);
+                OutputStream os = socket.getOutputStream();
+                PrintWriter pw = new PrintWriter(os);
 
                 //4.读取用户输入信息
                 String info = null;
@@ -168,13 +161,9 @@ public class TCPServer {
                 pw.write(reply);
                 pw.flush();
 
-                // 关闭资源
-                pw.close();
-                os.close();
-                br.close();
-                is.close();
                 socket.close();
-
+                is.close();
+                logger.info("资源关闭成功");
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -184,19 +173,6 @@ public class TCPServer {
 
         } catch (IOException e) {
             logger.error("socket 初始化异常", e);
-        } finally {
-            //5.关闭资源
-            try {
-                pw.close();
-                os.close();
-                br.close();
-                is.close();
-                socket.close();
-                serverSocket.close();
-                logger.warn("资源关闭");
-            } catch (IOException e) {
-                logger.error("关闭资源异常", e);
-            }
         }
     }
 }
