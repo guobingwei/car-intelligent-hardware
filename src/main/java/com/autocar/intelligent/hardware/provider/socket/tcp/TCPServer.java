@@ -1,6 +1,10 @@
 package com.autocar.intelligent.hardware.provider.socket.tcp;
 
+import com.alibaba.fastjson.JSON;
+import com.autocar.intelligent.hardware.domain.model.CarDataUploadModel;
 import com.autocar.intelligent.hardware.provider.socket.UploadSocketService;
+import com.autocar.intelligent.hardware.service.websocket.WebSocketService;
+import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -41,6 +46,7 @@ public class TCPServer {
 
     @Resource
     private UploadSocketService uploadSocketService;
+
 
 //    static {
 //        executorService.submit(() -> {
@@ -125,7 +131,10 @@ public class TCPServer {
     @PostConstruct
     public void init2() {
         executorService.submit( () -> {
-            initSocketServer();
+//            initSocketServer();
+            logger.info("异步线程");
+            // 随机刷新页面数据
+            randomShow();
         });
     }
 
@@ -174,5 +183,25 @@ public class TCPServer {
         } catch (IOException e) {
             logger.error("socket 初始化异常", e);
         }
+    }
+
+
+    private void randomShow() {
+        while (true) {
+            Integer temperature = RandomUtils.nextInt(21, 29);
+            Integer distance = RandomUtils.nextInt(20, 50);
+            CarDataUploadModel carDataUploadModel = new CarDataUploadModel();
+            carDataUploadModel.setBackDistance(distance.doubleValue());
+            carDataUploadModel.setTemperature(temperature.doubleValue());
+            WebSocketService.broadcastMessage(JSON.toJSONString(carDataUploadModel));
+            logger.info("随机刷新数据 data={}", carDataUploadModel);
+            try {
+                Thread.sleep(1000 * 2);
+            } catch (InterruptedException e) {
+                logger.error("随机刷新页面数据 异常");
+                break;
+            }
+        }
+
     }
 }
