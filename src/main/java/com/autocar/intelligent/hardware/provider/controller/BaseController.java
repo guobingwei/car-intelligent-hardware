@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Created by Seven on 12/29/16 12:03
- * mail: lizhongpin@meituan.com
+ * mail:
  */
 public abstract class BaseController {
     private static final Logger logger = LoggerFactory.getLogger(BaseController.class);

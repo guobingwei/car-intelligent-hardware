@@ -2,7 +2,7 @@ package com.autocar.intelligent.hardware.domain.enums;
 
 /**
  * Created by Seven on 11/3/16 12:24
- * mail: lizhongpin@meituan.com
+ * mail:
  * 业务异常
  */
 public enum BizExceptionEnum {

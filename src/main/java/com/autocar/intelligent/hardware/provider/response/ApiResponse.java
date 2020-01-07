@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * Created by Seven on 11/3/16 12:04
- * mail: lizhongpin@meituan.com
+ * mail:
  * 返回的数据格式
  */
 public class ApiResponse<T> implements Serializable {

@@ -4,7 +4,7 @@ package com.autocar.intelligent.hardware.domain.exception;
 import com.autocar.intelligent.hardware.domain.enums.BizExceptionEnum;
 
 /**
- * Created by shilifang on 16/8/15.
+ * Created by weiguobing on 16/8/15.
  */
 public class BizException extends RuntimeException {
 
