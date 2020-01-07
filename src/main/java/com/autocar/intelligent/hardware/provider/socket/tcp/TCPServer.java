@@ -18,7 +18,9 @@ import java.net.Socket;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -187,21 +189,25 @@ public class TCPServer {
 
 
     private void randomShow() {
+        double distanceRandomNum [] = {42.5, 67.4, 24.2, 56.1, 19.4};
+        double temperatureRandomNum [] = {21.3, 21.3, 21.3, 21.4, 21.4};
         while (true) {
-            Integer temperature = RandomUtils.nextInt(21, 29);
-            Integer distance = RandomUtils.nextInt(20, 50);
-            CarDataUploadModel carDataUploadModel = new CarDataUploadModel();
-            carDataUploadModel.setBackDistance(distance.doubleValue());
-            carDataUploadModel.setTemperature(temperature.doubleValue());
-            WebSocketService.broadcastMessage(JSON.toJSONString(carDataUploadModel));
-            logger.info("随机刷新数据 data={}", carDataUploadModel);
-            try {
-                Thread.sleep(1000 * 2);
-            } catch (InterruptedException e) {
-                logger.error("随机刷新页面数据 异常");
-                break;
+
+            for (int i = 0; i < distanceRandomNum.length; i++) {
+                double distance = distanceRandomNum[i];
+                double temperature = temperatureRandomNum[i];
+                CarDataUploadModel carDataUploadModel = new CarDataUploadModel();
+                carDataUploadModel.setBackDistance(distance);
+                carDataUploadModel.setTemperature(temperature);
+                WebSocketService.broadcastMessage(JSON.toJSONString(carDataUploadModel));
+                logger.info("随机刷新数据 data={}", carDataUploadModel);
+                try {
+                    Thread.sleep(1000 * 2);
+                } catch (InterruptedException e) {
+                    logger.error("随机刷新页面数据 异常");
+                    break;
+                }
             }
         }
-
     }
 }
